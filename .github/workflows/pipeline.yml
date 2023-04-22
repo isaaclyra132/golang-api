@@ -55,7 +55,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
-          path: go/src/github.com/isaaclyra132/golang-api
+          path: src/github.com/isaaclyra132/golang-api
 
       - name: Setup Go
         uses: actions/setup-go@v3
@@ -68,14 +68,14 @@ jobs:
           echo ${GOPATH}
           echo ${GOROOT}
         env:
-          GOPATH: /home/runner/work/golang-api/go
+          GOPATH: /home/runner/work/golang-api/
           
       - name: Install dependencies
         run: |
           ls
           go get -v ./...
         env:
-          GOPATH: /home/runner/work/golang-api/go
+          GOPATH: /home/runner/work/golang-api/
 
       # - name: Verify dependencies
       #   run: go mod verify
@@ -84,7 +84,7 @@ jobs:
           ls
           go test -v ./...
         env:
-          GOPATH: /home/runner/work/golang-api/go
+          GOPATH: /home/runner/work/golang-api/
 
       #- name: Run go vet
        # run: go vet ./...
