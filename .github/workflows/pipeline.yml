@@ -70,6 +70,11 @@ jobs:
         env:
           GOPATH: /home/runner/work/golang-api/go
           
+      - name: Verify dependencies
+        run: go mod verify
+        env:
+            GOPATH: /home/runner/work/golang-api/go
+            
       - name: Install dependencies
         run: |
           ls
