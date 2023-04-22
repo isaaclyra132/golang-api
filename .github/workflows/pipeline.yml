@@ -43,7 +43,7 @@ jobs:
         #   GOPATH: /home/runner/work/golang-api/go
 
       - name: Build
-        run: go build -v ./...
+        run: go build -v ./
         env:
            GOPATH: /home/runner/work/golang-api/golang-api
 
