@@ -53,9 +53,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 1
-          path: src/github.com/isaaclyra132/golang-api
+        #with:
+         # fetch-depth: 1
+         # path: src/github.com/isaaclyra132/golang-api
 
       - name: Setup Go
         uses: actions/setup-go@v3
@@ -67,24 +67,24 @@ jobs:
           pwd
           echo ${GOPATH}
           echo ${GOROOT}
-        env:
-          GOPATH: /home/runner/work/golang-api/
+        #env:
+         # GOPATH: /home/runner/work/golang-api/
           
       - name: Install dependencies
         run: |
           ls
-          go get -v ./...
-        env:
-          GOPATH: /home/runner/work/golang-api/
+          go get -v
+        #env:
+         # GOPATH: /home/runner/work/golang-api/
 
       # - name: Verify dependencies
       #   run: go mod verify
       - name: Tests
         run:  |
           ls
-          go test -v ./...
-        env:
-          GOPATH: /home/runner/work/golang-api/
+          go test -v 
+        #env:
+         # GOPATH: /home/runner/work/golang-api/
 
       #- name: Run go vet
        # run: go vet ./...
