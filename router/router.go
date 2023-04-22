@@ -13,5 +13,8 @@ func StartRouter() {
 	router.GET("/filmes", controller.GetFilmes)
 	router.GET("/filmes/:id", controller.GetFilme)
 	router.POST("/filmes", controller.CreateFilme)
+	router.PUT("/filmes/:id", controller.UpdateFilme)
+	router.DELETE("/filmes/:id", controller.DeleteFilme)
+
 	router.Run("localhost:8080")
 }

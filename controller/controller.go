@@ -45,3 +45,11 @@ func CreateFilme(c *gin.Context) {
 	filmes = append(filmes, filme)
 	c.JSON(http.StatusCreated, filme)
 }
+
+func UpdateFilme(c *gin.Context) {
+	// TODO - Atualizar Filme
+}
+
+func DeleteFilme(c *gin.Context) {
+	// TODO - Deletar Filme
+}
