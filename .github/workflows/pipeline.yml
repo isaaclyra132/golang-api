@@ -16,80 +16,42 @@ jobs:
    #   image: golang:1.20.3-alpine
     steps:
       - uses: actions/checkout@v3
-        #with:
-         #fetch-depth: 1
-         #path: go/src/github.com/isaaclyra132/golang-api
 
       - name: Setup Go
         uses: actions/setup-go@v3
         with:
             go-version: 1.20.3
-            
-      - name: Debug
-        run: |
-          ls
-          pwd
-          echo ${GOPATH}
-          echo ${GOROOT}
           
       - name: Install dependencies
-        run: |
-          ls
-          go get -v ./...
-        #env:
-        #  GOPATH: /home/runner/work/golang-api/golang-api
+        run: go get -v ./...
 
       - name: Verify dependencies
         run: go mod verify
-        #env:
-         #   GOPATH: /home/runner/work/golang-api/golang-api
 
       - name: Build
         run: go build -v ./...
-        #env:
-          # GOPATH: /home/runner/work/golang-api/golang-api
 
   tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 1
-          path: go/src/github.com/isaaclyra132/golang-api
 
       - name: Setup Go
         uses: actions/setup-go@v3
         with:
-          go-version: 1.20.1
-          
-      - name: Debug
-        run: |
-          pwd
-          echo ${GOPATH}
-          echo ${GOROOT}
-        env:
-          GOPATH: /home/runner/work/golang-api/go
+          go-version: 1.20.3
           
       - name: Verify dependencies
         run: go mod verify
-        env:
-            GOPATH: /home/runner/work/golang-api/go
             
       - name: Install dependencies
-        run: |
-          ls
-          go get -v ./
-        env:
-          GOPATH: /home/runner/work/golang-api/go
+        run: go get -v ./
 
-      # - name: Verify dependencies
-      #   run: go mod verify
+      - name: Verify dependencies
+        run: go mod verify
+        
       - name: Tests
-        run:  |
-          ls
-          go test -v 
-        #env:
-         # GOPATH: /home/runner/work/golang-api/
+        run:  go test -v ./...
 
       #- name: Run go vet
        # run: go vet ./...
