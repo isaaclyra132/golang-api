@@ -32,7 +32,7 @@ jobs:
           echo ${GOPATH}
           echo ${GOROOT}
       - name: Install dependencies
-        run: go get ./
+        run: go get ./...
         env:
           GOPATH: /home/runner/work/golang-api/go
 
