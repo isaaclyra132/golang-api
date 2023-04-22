@@ -139,8 +139,6 @@ func TestUpdateFilme(t *testing.T) {
 }
 
 func TestDeleteFilme(t *testing.T) {
-	// TODO - Testar a rota de deletar filme
-
 	// Cria um request HTTP DELETE para a rota /movies/1
 	req, _ := http.NewRequest("DELETE", "/filmes/1", nil)
 
