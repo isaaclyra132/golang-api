@@ -74,6 +74,12 @@ jobs:
       - name: Verify dependencies
         run: go mod verify
       
+      - name: Install staticcheck
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest
+
+      - name: Run staticcheck
+        run: staticcheck ./...
+      
       - name: Install golint
         run: go install golang.org/x/lint/golint@latest
 
