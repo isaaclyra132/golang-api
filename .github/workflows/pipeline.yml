@@ -16,9 +16,9 @@ jobs:
    #   image: golang:1.20.3-alpine
     steps:
       - uses: actions/checkout@v3
-        with:
-         fetch-depth: 1
-         path: go/src/github.com/isaaclyra132/golang-api
+        #with:
+         #fetch-depth: 1
+         #path: go/src/github.com/isaaclyra132/golang-api
 
       - name: Setup Go
         uses: actions/setup-go@v3
@@ -27,15 +27,14 @@ jobs:
             
       - name: Debug
         run: |
-          cd go/src
           ls
           pwd
           echo ${GOPATH}
           echo ${GOROOT}
       - name: Install dependencies
         run: go get ./...
-        env:
-          GOPATH: /home/runner/work/golang-api/go
+       # env:
+        #  GOPATH: /home/runner/work/golang-api/go
 
       - name: Verify dependencies
         run: go mod verify
