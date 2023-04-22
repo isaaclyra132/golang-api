@@ -64,8 +64,10 @@ jobs:
 
       # - name: Verify dependencies
       #   run: go mod verify
-      - name: Test
-        run: go test -v ./tests/...
+      - name: Tests
+        run:  |
+          ls
+          go test -v ./tests/...
         env:
           GOPATH: /home/runner/work/golang-api/go
 
