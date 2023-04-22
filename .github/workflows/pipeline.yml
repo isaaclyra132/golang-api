@@ -34,8 +34,8 @@ jobs:
 
       - name: Build
         run: go build -v ./
-        # env:
-        #   GOPATH: /home/runner/work/golang-api/go
+        env:
+          GOPATH: /home/runner/work/golang-api/go
 
   tests:
     runs-on: ubuntu-latest
@@ -51,10 +51,10 @@ jobs:
       #   run: go mod verify
       - name: Test
         run: go test -v ./tests/
-        # env:
-        #   GOPATH: /home/runner/work/golang-api/go
+        env:
+          GOPATH: /home/runner/work/golang-api/go
 
       - name: Run go vet
         run: go vet ./...
-        # env:
-        #   GOPATH: /home/runner/work/golang-api/go
+        env:
+          GOPATH: /home/runner/work/golang-api/go
