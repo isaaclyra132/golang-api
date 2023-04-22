@@ -64,8 +64,6 @@ jobs:
           
       - name: Debug
         run: |
-          cd /home/runner/work/golang-api/
-          ls
           pwd
           echo ${GOPATH}
           echo ${GOROOT}
