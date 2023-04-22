@@ -32,10 +32,12 @@ jobs:
           pwd
           echo ${GOPATH}
           echo ${GOROOT}
-      #- name: Install dependencies
-       # run: go get ./
-       # env:
-        #  GOPATH: /home/runner/work/golang-api/go
+      - name: Install dependencies
+        run: |
+          ls
+          go get -v ./...
+        env:
+          GOPATH: /home/runner/work/golang-api/golang-api
 
       - name: Verify dependencies
         run: go mod verify
@@ -43,27 +45,27 @@ jobs:
             GOPATH: /home/runner/work/golang-api/golang-api
 
       - name: Build
-        run: go build -v ./
+        run: go build -v ./...
         env:
            GOPATH: /home/runner/work/golang-api/golang-api
 
-  #tests:
-   # runs-on: ubuntu-latest
-    #steps:
-     # - uses: actions/checkout@v3
-      #  with:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        #with:
        #   fetch-depth: 1
         #  path: go/src/github.com/isaaclyra132/golang-api
 
-      #- name: Setup Go
-       # uses: actions/setup-go@v3
-        #with:
-         # go-version: 1.20
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.20
 
       # - name: Verify dependencies
       #   run: go mod verify
-      #- name: Test
-       # run: go test -v ./tests/...
+      - name: Test
+        run: go test -v ./tests/...
         #env:
          # GOPATH: /home/runner/work/golang-api/go
 
