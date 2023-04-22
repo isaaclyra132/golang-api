@@ -16,5 +16,5 @@ func StartRouter() {
 	router.PUT("/filmes/:id", controller.UpdateFilme)
 	router.DELETE("/filmes/:id", controller.DeleteFilme)
 
-	router.Run("localhost:8080")
+	router.Run(":8043")
 }

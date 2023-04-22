@@ -48,6 +48,25 @@ func CreateFilme(c *gin.Context) {
 
 func UpdateFilme(c *gin.Context) {
 	// TODO - Atualizar Filme
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ID de filme inválido"})
+		return
+	}
+	var updatedFilme models.Filme
+	if err := c.ShouldBindJSON(&updatedFilme); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	for i, filme := range filmes {
+		if filme.ID == strconv.Itoa(id) {
+			updatedFilme.ID = strconv.Itoa(id)
+			filmes[i] = updatedFilme
+			c.JSON(http.StatusOK, updatedFilme)
+			return
+		}
+	}
+	c.JSON(http.StatusNotFound, gin.H{"error": "Filme não encontrado"})
 }
 
 func DeleteFilme(c *gin.Context) {
