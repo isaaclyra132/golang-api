@@ -27,9 +27,6 @@ jobs:
 
       - name: Verify dependencies
         run: go mod verify
-        
-      #- name: Run go vet
-       # run: go vet ./...
 
       - name: Build
         run: go build -v ./...
@@ -73,6 +70,9 @@ jobs:
 
       - name: Verify dependencies
         run: go mod verify
+      
+      - name: Run go vet
+        run: go vet ./...
       
       - name: Install staticcheck
         run: go install honnef.co/go/tools/cmd/staticcheck@latest
