@@ -27,7 +27,7 @@ jobs:
           echo ${GOROOT}
 
       - name: Install dependencies
-        run: go mod download
+        run: go get ./...
 
       - name: Verify dependencies
         run: go mod verify
