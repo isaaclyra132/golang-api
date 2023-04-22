@@ -27,7 +27,7 @@ jobs:
             
       - name: Debug
         run: |
-          cd go
+          cd go/src
           ls
           pwd
           echo ${GOPATH}
