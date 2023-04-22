@@ -70,7 +70,7 @@ func DeleteFilme(c *gin.Context) {
 	for i, filme := range db.Filmes {
 		if filme.ID == strconv.Itoa(id) {
 			db.Filmes = append(db.Filmes[:i], db.Filmes[i+1:]...)
-			c.JSON(http.StatusOK, gin.H{"message": "Filme deletado"})
+			c.JSON(http.StatusNoContent, gin.H{"message": "Filme deletado"})
 			return
 		}
 	}

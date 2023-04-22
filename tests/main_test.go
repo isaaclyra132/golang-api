@@ -70,7 +70,6 @@ func TestGetFilme(t *testing.T) {
 }
 
 func TestCreateFilme(t *testing.T) {
-	// TODO - Testar a rota de criar filme
 	// Cria um request HTTP POST para a rota /movies com um JSON de filme
 	jsonStr := `{
 		"titulo": "Spider-Man: Into the Spider-Verse",
@@ -109,9 +108,55 @@ func TestCreateFilme(t *testing.T) {
 }
 
 func TestUpdateFilme(t *testing.T) {
-	// TODO - Testar a rota de atualizar filme
+	// Cria um request HTTP PUT para a rota /movies/1 com um JSON de filme atualizado
+	jsonStr := `{
+		"titulo": "Spider-Man: Into the Spider-Verse",
+		"direcao": "Bob Persichetti, Peter Ramsey, Rodney Rothman",
+		"producao": "Sony Pictures Animation, Avi Arad, Pascal Pictures, Lord Miller",
+		"ano_lancamento": 2019
+	 }`
+	req, _ := http.NewRequest("PUT", "/filmes/1", bytes.NewBuffer([]byte(jsonStr)))
+	req.Header.Set("Content-Type", "application/json")
+
+	// Cria um router do Gin para testar as rotas
+	router := gin.Default()
+	router.PUT("/filmes/:id", controller.UpdateFilme)
+
+	// Cria um ResponseRecorder para gravar a resposta do servidor
+	w := httptest.NewRecorder()
+
+	// Envia a requisição para o servidor
+	router.ServeHTTP(w, req)
+
+	// Verifica se o código de status é 200 OK
+	assert.Equal(t, http.StatusOK, w.Code)
+
+	// Decodifica o corpo da resposta para verificar se o filme atualizado está correto
+	var filme models.Filme
+	err := json.Unmarshal(w.Body.Bytes(), &filme)
+	assert.Nil(t, err)
+	assert.Equal(t, models.Filme{ID: "1", Titulo: "Spider-Man: Into the Spider-Verse", Direcao: "Bob Persichetti, Peter Ramsey, Rodney Rothman", Producao: "Sony Pictures Animation, Avi Arad, Pascal Pictures, Lord Miller", AnoLancamento: 2019}, filme)
 }
 
 func TestDeleteFilme(t *testing.T) {
 	// TODO - Testar a rota de deletar filme
+
+	// Cria um request HTTP DELETE para a rota /movies/1
+	req, _ := http.NewRequest("DELETE", "/filmes/1", nil)
+
+	// Cria um router do Gin para testar as rotas
+	router := gin.Default()
+	router.DELETE("/filmes/:id", controller.DeleteFilme)
+
+	// Cria um ResponseRecorder para gravar a resposta do servidor
+	w := httptest.NewRecorder()
+
+	// Envia a requisição para o servidor
+	router.ServeHTTP(w, req)
+
+	// Verifica se o código de status é 204 No Content
+	assert.Equal(t, http.StatusNoContent, w.Code)
+
+	// Verifica se o segundo filme ainda existe no armazenamento
+	assert.Equal(t, models.Filme{ID: "2", Titulo: "Tá Dando Onda", Direcao: "Ash Brannon, Chris Buck", Producao: "Sony Pictures Animation", AnoLancamento: 2007}, db.Filmes[0])
 }
