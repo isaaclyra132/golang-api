@@ -12,6 +12,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: golang:1.20.3-alpine
     steps:
       - name: Check out code to a GOPATH compatible directory
       - uses: actions/checkout@v3
@@ -19,31 +21,29 @@ jobs:
           fetch-depth: 1
           path: go/src/github.com/isaaclyra132/golang-api
 
-      - name: Setup Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: 1.20
-
-      - name: Debug
-        run: |
-          pwd
-          echo ${GOPATH}
-          echo ${GOROOT}
-
+      # - name: Setup Go
+      #   uses: actions/setup-go@v3
+      #   with:
+      #     go-version: 1.20
+      # - name: Debug
+      #   run: |
+      #     pwd
+      #     echo ${GOPATH}
+      #     echo ${GOROOT}
       - name: Install dependencies
         run: go get ./...
-        env:
-          GOPATH: /home/runner/work/golang-api/go
+        # env:
+        #   GOPATH: /home/runner/work/golang-api/go
 
       - name: Verify dependencies
         run: go mod verify
-        env:
-          GOPATH: /home/runner/work/golang-api/go
+        # env:
+        #   GOPATH: /home/runner/work/golang-api/go
 
       - name: Build
         run: go build -v ./
-        env:
-          GOPATH: /home/runner/work/golang-api/go
+        # env:
+        #   GOPATH: /home/runner/work/golang-api/go
 
   tests:
     runs-on: ubuntu-latest
