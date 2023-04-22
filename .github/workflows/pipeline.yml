@@ -23,9 +23,15 @@ jobs:
 
     - name: Build
       run: go build -v ./
+      env:
+        GOPATH: /home/runner/work/golang-api/go
       
     - name: Run go vet
       run: go vet ./...
+      env:
+        GOPATH: /home/runner/work/golang-api/go
 
     - name: Test
       run: go test -v ./tests/...
+      env:
+        GOPATH: /home/runner/work/golang-api/go
