@@ -27,6 +27,7 @@ jobs:
             
       - name: Debug
         run: |
+          cd go
           ls
           pwd
           echo ${GOPATH}
