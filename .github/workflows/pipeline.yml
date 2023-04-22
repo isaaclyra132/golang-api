@@ -67,7 +67,7 @@ jobs:
       - name: Tests
         run:  |
           ls
-          go test -v ./tests/...
+          go test -v ./...
         env:
           GOPATH: /home/runner/work/golang-api/go
 
