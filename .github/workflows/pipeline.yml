@@ -37,10 +37,10 @@ jobs:
        # env:
         #  GOPATH: /home/runner/work/golang-api/go
 
-      #- name: Verify dependencies
-        #run: go mod verify
-        # env:
-        #   GOPATH: /home/runner/work/golang-api/go
+      - name: Verify dependencies
+        run: go mod verify
+        env:
+            GOPATH: /home/runner/work/golang-api/golang-api
 
       - name: Build
         run: go build -v ./
