@@ -36,18 +36,18 @@ jobs:
         run: |
           ls
           go get -v ./...
-        env:
-          GOPATH: /home/runner/work/golang-api/golang-api
+        #env:
+        #  GOPATH: /home/runner/work/golang-api/golang-api
 
       - name: Verify dependencies
         run: go mod verify
-        env:
-            GOPATH: /home/runner/work/golang-api/golang-api
+        #env:
+         #   GOPATH: /home/runner/work/golang-api/golang-api
 
       - name: Build
         run: go build -v ./...
-        env:
-           GOPATH: /home/runner/work/golang-api/golang-api
+        #env:
+          # GOPATH: /home/runner/work/golang-api/golang-api
 
   tests:
     runs-on: ubuntu-latest
