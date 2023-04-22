@@ -13,7 +13,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out code to a GOPATH compatible directory
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+          path: go/src/github.com/isaaclyra132/golang-api
 
       - name: Setup Go
         uses: actions/setup-go@v3
@@ -28,9 +32,13 @@ jobs:
 
       - name: Install dependencies
         run: go get ./...
+        env:
+          GOPATH: /home/runner/work/golang-api/go
 
       - name: Verify dependencies
         run: go mod verify
+        env:
+          GOPATH: /home/runner/work/golang-api/go
 
       - name: Build
         run: go build -v ./
@@ -40,7 +48,11 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out code to a GOPATH compatible directory
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+          path: go/src/github.com/isaaclyra132/golang-api
 
       - name: Setup Go
         uses: actions/setup-go@v3
