@@ -69,6 +69,8 @@ jobs:
           pwd
           echo ${GOPATH}
           echo ${GOROOT}
+        env:
+          GOPATH: /home/runner/work/golang-api/go
           
       - name: Install dependencies
         run: |
