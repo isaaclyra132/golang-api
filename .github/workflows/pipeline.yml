@@ -44,8 +44,8 @@ jobs:
 
       - name: Build
         run: go build -v ./
-        # env:
-        #   GOPATH: /home/runner/work/golang-api/go
+        env:
+           GOPATH: /home/runner/work/golang-api/golang-api
 
   #tests:
    # runs-on: ubuntu-latest
