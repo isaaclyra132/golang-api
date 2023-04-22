@@ -45,18 +45,39 @@ func TestGetFilmes(t *testing.T) {
 	assert.Equal(t, filmes, response)
 }
 
-func testGetFilme(t *testing.T) {
-	// TODO - Testar a rota de buscar filme
+func TestGetFilme(t *testing.T) {
+	// Cria um router do Gin para testar as rotas
+	router := gin.Default()
+	router.GET("/filmes/:id", controller.GetFilme)
+
+	// Cria um request HTTP GET para a rota /movies/1
+	req, _ := http.NewRequest("GET", "/filmes/1", nil)
+
+	// Cria um ResponseRecorder para gravar a resposta do servidor
+	w := httptest.NewRecorder()
+
+	// Envia a requisição para o servidor
+	router.ServeHTTP(w, req)
+
+	// Verifica se o código de status é 200 OK
+	assert.Equal(t, http.StatusOK, w.Code)
+
+	// Decodifica o corpo da resposta para verificar se o filme retornado está correto
+	var filme models.Filme
+	err := json.Unmarshal(w.Body.Bytes(), &filme)
+	assert.Nil(t, err)
+	assert.Equal(t, models.Filme{ID: "1", Titulo: "Hotel Transilvânia", Direcao: "Genndy Tartakovsky, Jennifer Kluska, Derek Drymon", Producao: "Sony Pictures Animation", AnoLancamento: 2012}, filme)
+
 }
 
-func testCreateFilme(t *testing.T) {
+func TestCreateFilme(t *testing.T) {
 	// TODO - Testar a rota de criar filme
 }
 
-func testUpdateFilme(t *testing.T) {
+func TestUpdateFilme(t *testing.T) {
 	// TODO - Testar a rota de atualizar filme
 }
 
-func testDeleteFilme(t *testing.T) {
+func TestDeleteFilme(t *testing.T) {
 	// TODO - Testar a rota de deletar filme
 }
