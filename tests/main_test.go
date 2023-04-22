@@ -46,6 +46,9 @@ func TestGetFilmes(t *testing.T) {
 }
 
 func TestGetFilme(t *testing.T) {
+	//Instancia filme para teste
+	filmeTeste := models.Filme{ID: "1", Titulo: "Hotel Transilvânia", Direcao: "Genndy Tartakovsky, Jennifer Kluska, Derek Drymon", Producao: "Sony Pictures Animation", AnoLancamento: 2012}
+
 	// Cria um router do Gin para testar as rotas
 	router := gin.Default()
 	router.GET("/filmes/:id", controller.GetFilme)
@@ -66,8 +69,7 @@ func TestGetFilme(t *testing.T) {
 	var filme models.Filme
 	err := json.Unmarshal(w.Body.Bytes(), &filme)
 	assert.Nil(t, err)
-	assert.Equal(t, models.Filme{ID: "1", Titulo: "Hotel Transilvânia", Direcao: "Genndy Tartakovsky, Jennifer Kluska, Derek Drymon", Producao: "Sony Pictures Animation", AnoLancamento: 2012}, filme)
-
+	assert.Equal(t, filmeTeste, filme)
 }
 
 func TestCreateFilme(t *testing.T) {
