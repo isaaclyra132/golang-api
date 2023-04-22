@@ -2,10 +2,13 @@ package tests
 
 import (
 	"api-go/controller"
+	"api-go/db"
 	"api-go/models"
+	"bytes"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
+	"strconv"
 	"testing"
 
 	"github.com/gin-gonic/gin"
@@ -14,13 +17,7 @@ import (
 
 func TestGetFilmes(t *testing.T) {
 
-	filmes := []models.Filme{
-		{ID: "1", Titulo: "Hotel Transilvânia", Direcao: "Genndy Tartakovsky, Jennifer Kluska, Derek Drymon", Producao: "Sony Pictures Animation", AnoLancamento: 2012},
-		{ID: "2", Titulo: "Tá Dando Onda", Direcao: "Ash Brannon, Chris Buck", Producao: "Sony Pictures Animation", AnoLancamento: 2007},
-		{ID: "3", Titulo: "Interestelar", Direcao: "Christopher Nolan", Producao: "Legendary Pictures, Syncopy Films, Lynda Obst Productions", AnoLancamento: 2014},
-		{ID: "4", Titulo: "Vingadores: Ultimato", Direcao: "Anthony Russo, Joe Russo", Producao: "Marvel Studios", AnoLancamento: 2019},
-		{ID: "5", Titulo: "Coringa", Direcao: "Todd Phillips", Producao: "Village, Roadshow Pictures, DC Films, Sikelia Productions, Joint Effort Productions, Green Hat Films", AnoLancamento: 2019},
-	}
+	filmes := db.Filmes
 
 	// Cria um router do Gin para testar as rotas
 	router := gin.Default()
@@ -74,6 +71,41 @@ func TestGetFilme(t *testing.T) {
 
 func TestCreateFilme(t *testing.T) {
 	// TODO - Testar a rota de criar filme
+	// Cria um request HTTP POST para a rota /movies com um JSON de filme
+	jsonStr := `{
+		"titulo": "Spider-Man: Into the Spider-Verse",
+		"direcao": "Bob Persichetti, Peter Ramsey, Rodney Rothman",
+		"producao": "Sony Pictures Animation, Avi Arad, Pascal Pictures, Lord Miller",
+		"ano_lancamento": 2019
+	 }`
+	req, _ := http.NewRequest("POST", "/filmes", bytes.NewBuffer([]byte(jsonStr)))
+	req.Header.Set("Content-Type", "application/json")
+
+	// Cria um router do Gin para testar as rotas
+	router := gin.Default()
+	router.POST("/filmes", controller.CreateFilme)
+
+	// Cria um ResponseRecorder para gravar a resposta do servidor
+	w := httptest.NewRecorder()
+
+	// Envia a requisição para o servidor
+	router.ServeHTTP(w, req)
+
+	// Verifica se o código de status é 201 Created
+	assert.Equal(t, http.StatusCreated, w.Code)
+
+	// Decodifica o corpo da resposta para verificar se o filme criado está correto
+	var filme models.Filme
+	err := json.Unmarshal(w.Body.Bytes(), &filme)
+	assert.Nil(t, err)
+	assert.Equal(t, strconv.Itoa(len(db.Filmes)), filme.ID)
+	assert.Equal(t, "Spider-Man: Into the Spider-Verse", filme.Titulo)
+	assert.Equal(t, "Bob Persichetti, Peter Ramsey, Rodney Rothman", filme.Direcao)
+	assert.Equal(t, "Sony Pictures Animation, Avi Arad, Pascal Pictures, Lord Miller", filme.Producao)
+	assert.Equal(t, 2019, filme.AnoLancamento)
+
+	// Verifica se o filme foi adicionado ao armazenamento
+	assert.Equal(t, filme, db.Filmes[len(db.Filmes)-1])
 }
 
 func TestUpdateFilme(t *testing.T) {
