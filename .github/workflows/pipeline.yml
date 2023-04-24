@@ -5,9 +5,9 @@ name: CI-CD
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "develop"]
   pull_request:
-    branches: ["main"]
+    branches: ["main", "develop"]
 
 jobs:
   build:
@@ -87,6 +87,7 @@ jobs:
         run: golint ./...
   Deploy:
     needs: build
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: golang-api
