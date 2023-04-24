@@ -123,6 +123,8 @@ jobs:
       - name: Update Pods
         run: |
           ls
+          cd k8s
+          kubectl apply -f deployment.yaml
           
     
     
