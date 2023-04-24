@@ -3,7 +3,6 @@ kind: Deployment
 metadata: 
   name: golang-api
 spec:
-  replicas: 2
   selector:
     matchLabels:
       app: golang-api
@@ -15,7 +14,7 @@ spec:
     spec:
       containers:
         - name: golang-api
-          image: gcr.io/charismatic-amp-383021/golang-api@sha256:275d66fd5e83ed6558829a8cc5ff08784b524d92bad72d935b08ecc0fbf61899
+          image: gcr.io/charismatic-amp-383021/golang-api:latest
           imagePullPolicy: Always
           ports: 
           - containerPort: 8043
