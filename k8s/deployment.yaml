@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: golang-api
+spec:
+  selector:
+    matchLabels:
+      app: golang-api
+  template:
+    metadata:
+      name: golang-api
+      labels:
+        app: golang-api
+    spec:
+      containers:
+        - name: golang-api
+          image: gcr.io/charismatic-amp-383021/golang-api:latest
+          imagePullPolicy: Always
+          ports: 
+          - containerPort: 8043
