@@ -4,8 +4,6 @@
 name: CI-CD
 
 on:
-  push:
-    branches: ["main", "develop"]
   pull_request:
     branches: ["main", "develop"]
 
@@ -39,17 +37,8 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: 1.20.3
-          
-      #- name: Verify dependencies
-      #  run: go mod verify
-            
-      #- name: Install dependencies
-      #  run: go get -v ./
 
-      #- name: Verify dependencies
-      #  run: go mod verify
-        
-      - name: Tests
+      - name: Run tests
         run:  go test -v ./...
   QA:
     needs: build
@@ -61,15 +50,6 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: 1.20.3
-          
-      #- name: Verify dependencies
-      #  run: go mod verify
-            
-      #- name: Install dependencies
-      #  run: go get -v ./
-
-      #- name: Verify dependencies
-      #  run: go mod verify
       
       - name: Run go vet
         run: go vet ./...
@@ -85,6 +65,7 @@ jobs:
 
       - name: Run golint
         run: golint ./...
+
   Deploy:
     needs: Tests
     if: github.ref == 'refs/heads/main'
@@ -126,12 +107,12 @@ jobs:
           docker push gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
           docker push gcr.io/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG
       
-      - name: Update Pods
+      - name: Update deployment
         run: |
           ls
           cd k8s
-          # gcloud container clusters get-credentials autopilot-cluster-1 --region southamerica-west1 --project charismatic-amp-383021
           kubectl apply -f deployment.yaml
+          kubectl rollout restart deployment golang-api
           
     
     
