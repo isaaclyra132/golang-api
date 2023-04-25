@@ -4,6 +4,8 @@
 name: CI-CD
 
 on:
+  push:
+    branches: ["main", "develop"]
   pull_request:
     branches: ["main", "develop"]
 
@@ -109,7 +111,6 @@ jobs:
       
       - name: Update deployment
         run: |
-          ls
           cd k8s
           kubectl apply -f deployment.yaml
           kubectl rollout restart deployment golang-api
